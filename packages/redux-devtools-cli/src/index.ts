@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import https from 'https';
 import getPort from 'get-port';
 import socketClusterServer from 'socketcluster-server';
 import getOptions from './options.js';
@@ -37,7 +38,32 @@ export default async function (argv: { [arg: string]: any }): Promise<{
     console.log('[ReduxDevTools] Start server...');
     console.log('-'.repeat(80) + '\n');
   }
-  const httpServer = http.createServer();
+
+  let httpServer: http.Server | https.Server;
+
+  if (options.protocol === 'https') {
+    let errorMessage = '';
+
+    if (options.protocolOptions?.key === undefined) {
+      errorMessage += 'Missing --key option.\n';
+    }
+    if (options.protocolOptions?.cert === undefined) {
+      errorMessage += 'Missing --cert option.\n';
+    }
+
+    if (errorMessage.length > 0) {
+      throw new Error(`HTTPS server cannot be started.\n${errorMessage}`);
+    }
+
+    httpServer = https.createServer({
+      key: options.protocolOptions?.key,
+      cert: options.protocolOptions?.cert,
+      passphrase: options.protocolOptions?.passphrase,
+    });
+  } else {
+    httpServer = http.createServer();
+  }
+
   const agServer = socketClusterServer.attach(httpServer, options);
 
   const app = express();

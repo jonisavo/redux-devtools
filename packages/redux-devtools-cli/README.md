@@ -83,7 +83,7 @@ redux-devtools --open=firefox
 
 Set `hostname` and `port` to the values you want. `hostname` by default is `localhost` and `port` is `8000`.
 
-To use WSS, set `protocol` argument to `https` and provide `key`, `cert` and `passphrase` arguments.
+To use a HTTPS server and WSS, set `protocol` argument to `https` and provide `key` and `cert`. The `passphrase` argument may be supplied if necessary.
 
 #### Available options
 
@@ -91,10 +91,10 @@ To use WSS, set `protocol` argument to `https` and provide `key`, `cert` and `pa
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | `--hostname`     | hostname                                                                                                                                                                                                                                                      | localhost     |
 | `--port`         | port                                                                                                                                                                                                                                                          | 8000          |
-| `--protocol`     | protocol                                                                                                                                                                                                                                                      | http          |
-| `--key`          | the key file for [running an https server](https://github.com/SocketCluster/socketcluster#using-over-https) (`--protocol` must be set to 'https')                                                                                                             | -             |
-| `--cert`         | the cert file for [running an https server](https://github.com/SocketCluster/socketcluster#using-over-https) (`--protocol` must be set to 'https')                                                                                                            | -             |
-| `--passphrase`   | the key passphrase for [running an https server](https://github.com/SocketCluster/socketcluster#using-over-https) (`--protocol` must be set to 'https')                                                                                                       | -             |
+| `--protocol`     | protocol: `http` or `https`                                                                                                                                                                                                                                   | http          |
+| `--key`          | the key file for [running an https server](https://github.com/SocketCluster/socketcluster#using-over-https) (required when `--protocol` is set to `https`)                                                                                                    | -             |
+| `--cert`         | the cert file for [running an https server](https://github.com/SocketCluster/socketcluster#using-over-https) (required when `--protocol` is set to `https`)                                                                                                   | -             |
+| `--passphrase`   | the key passphrase for [running an https server](https://github.com/SocketCluster/socketcluster#using-over-https) (used when `--protocol` is set to `https`)                                                                                                  | -             |
 | `--dbOptions`    | database configuration, can be whether an object or a path (string) to json configuration file (by default it uses our `./defaultDbOptions.json` file. Set `migrate` key to `true` to use our migrations file. [More details bellow](#save-reports-and-logs). | -             |
 | `--logLevel`     | the socket server log level - 0=none, 1=error, 2=warn, 3=info                                                                                                                                                                                                 | 3             |
 | `--wsEngine`     | the socket server web socket engine - ws or uws (sc-uws)                                                                                                                                                                                                      | ws            |
